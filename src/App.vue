@@ -1,17 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view></router-view>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import {useStore} from "vuex";
+import {watch} from "vue";
+import {EMPLOYEE_LIST_KEY} from "@/localStorage";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const store = useStore()
+const employeeList = store.getters.employeeList
+
+watch(employeeList, (value) => {
+  localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(value))
+})
+
 </script>
 
 <style>
